@@ -19,6 +19,8 @@ public:
     void onDisconnect(BLEServer* server, esp_ble_gatts_cb_param_t* param) override;
 
 private:
+    void enableHidNotifications();
+
     std::string deviceName;
     std::string deviceManufacturer;
     uint8_t batteryLevel;

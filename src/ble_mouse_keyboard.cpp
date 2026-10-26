@@ -139,6 +139,22 @@ bool BleMouseKeyboard::isConnected() const {
     return connected;
 }
 
+void BleMouseKeyboard::enableHidNotifications() {
+    BLE2902* mouseCccd = inputMouse == nullptr
+        ? nullptr
+        : static_cast<BLE2902*>(inputMouse->getDescriptorByUUID(BLEUUID((uint16_t)0x2902)));
+    BLE2902* keyboardCccd = inputKeyboard == nullptr
+        ? nullptr
+        : static_cast<BLE2902*>(inputKeyboard->getDescriptorByUUID(BLEUUID((uint16_t)0x2902)));
+
+    if (mouseCccd != nullptr) mouseCccd->setNotifications(true);
+    if (keyboardCccd != nullptr) keyboardCccd->setNotifications(true);
+
+    Serial.printf("HID CCCD restored: mouse=%s keyboard=%s\n",
+                  mouseCccd != nullptr ? "enabled" : "missing",
+                  keyboardCccd != nullptr ? "enabled" : "missing");
+}
+
 void BleMouseKeyboard::move(signed char x, signed char y, signed char wheel, signed char hWheel) {
     if (!connected || inputMouse == nullptr) return;
 
@@ -210,10 +226,12 @@ void BleMouseKeyboard::typeText(const char* text) {
 }
 
 void BleMouseKeyboard::onConnect(BLEServer*) {
+    enableHidNotifications();
     connected = true;
 }
 
 void BleMouseKeyboard::onConnect(BLEServer*, esp_ble_gatts_cb_param_t*) {
+    enableHidNotifications();
     connected = true;
 }
 

@@ -64,6 +64,8 @@ pio run --target upload
 
 ## Personalización
 
+- **Texto del botón ESCRIBIR**: usa el contenido de `/texto.txt` en la raíz de la microSD. Si el fichero no existe, se genera una cadena de 10 caracteres con mayúsculas, minúsculas, al menos 4 números y un símbolo, y se guarda automáticamente.
+- **Regenerar la cadena**: pulsa A y C a la vez para abrir la confirmación; pulsa A para regenerar y guardar, o C para cancelar.
 - **Intervalo de movimiento**: `mouseJiggler.setMovementInterval(ms)` — por defecto 500ms
 - **Distancia de movimiento**: `mouseJiggler.setMovementDistance(píxeles)` — por defecto 5px
 - **Patrón de movimiento**: zigzag (derecha, abajo, izquierda, arriba) — configurable en `mouse_jiggler.cpp`
